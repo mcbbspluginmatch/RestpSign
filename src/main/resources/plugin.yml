@@ -1,0 +1,17 @@
+name: RestpSign
+main: com.ayou.restpsign.RestpSign
+version: 0.0.1
+author: Ayou
+depend: [Residence]
+softdepend: [Vault]
+commands:
+  restp:
+    description: Main command
+    usage: /restp help
+permissions:
+  restpsign.admin:
+    description: Admin permission
+    default: op
+  restpsign.create:
+    description: Create sign permission
+    default: true
