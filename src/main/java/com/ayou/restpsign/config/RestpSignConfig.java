@@ -37,6 +37,7 @@ public class RestpSignConfig {
             int save = 0;
 
             save += ConfigUtil.setDefaultIfNotSet(configuration,"version","0.0.1");
+            save += ConfigUtil.setDefaultIfNotSet(configuration,"hookVault",true);
 
             ConfigurationSection lang;
             if (!configuration.isConfigurationSection("Lang")){
@@ -55,6 +56,7 @@ public class RestpSignConfig {
                 save += ConfigUtil.setDefaultIfNotSet(lang,"noPerm","&c你没有足够的权限!");
                 save += ConfigUtil.setDefaultIfNotSet(lang,"editDone","&a成功编辑领地牌子!");
                 save += ConfigUtil.setDefaultIfNotSet(lang,"createDone","&a成功创建领地牌子!");
+                save += ConfigUtil.setDefaultIfNotSet(lang,"notexists","&c该领地不存在!");
             }
 
             ConfigurationSection settings;

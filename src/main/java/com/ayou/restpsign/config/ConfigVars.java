@@ -33,6 +33,9 @@ public class ConfigVars {
     public static String noPerm;
     public static String editDone;
     public static String createDone;
+    public static String notexists;
+
+    public static boolean hookVault;
 
     public static String line_1;
 
@@ -47,6 +50,7 @@ public class ConfigVars {
         try {
             if (config != null){
                 version = config.getInt("version");
+                hookVault = config.getBoolean("hookVault");
 
                 ConfigurationSection lang = config.getConfigurationSection("Lang");
                 if (lang != null){
@@ -59,6 +63,7 @@ public class ConfigVars {
                     noPerm = replaceChatColor(lang.getString("noPerm"));
                     editDone = replaceChatColor(lang.getString("editDone"));
                     createDone = replaceChatColor(lang.getString("createDone"));
+                    notexists = replaceChatColor(lang.getString("notexists"));
                 }
 
                 ConfigurationSection settings = config.getConfigurationSection("Settings");
