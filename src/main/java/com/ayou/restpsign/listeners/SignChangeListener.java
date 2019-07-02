@@ -33,10 +33,9 @@ public class SignChangeListener extends BaseListener {
                         if (tpsignVault != null){
                             money = tpsignVault.getMoney() * tpsignVault.getDiscount();
                         }
-                        if (RestpSign.getInstance().getEconomy().has(player,money)){
-                            event.setLine(0,ConfigVars.line_1);
-
+                        if (RestpSign.getInstance().getEconomy().has(player,money) || player.isOp() || player.hasPermission("restpsign.admin")){
                             if (!ConfigVars.tpSigns.containsKey(event.getBlock())){
+                                event.setLine(0,ConfigVars.line_1);
                                 Tpsign tpSign = new Tpsign(event.getBlock().getLocation(),text, (int) (System.currentTimeMillis()/1000));
                                 RestpSign.getInstance().getConfigManger().getDataConfig().addSign(tpSign);
                                 if (!(player.isOp() || player.hasPermission("restpsign.admin"))){
