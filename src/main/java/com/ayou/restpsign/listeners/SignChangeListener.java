@@ -50,6 +50,8 @@ public class SignChangeListener extends BaseListener {
                         }else{
                             player.sendMessage(ConfigVars.noMoney.replace("%money%",String.valueOf(money)));
                         }
+                    }else{
+                        player.sendMessage(ConfigVars.notexists);
                     }
                 }
             }

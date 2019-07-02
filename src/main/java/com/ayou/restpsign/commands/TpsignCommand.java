@@ -74,6 +74,8 @@ public class TpsignCommand implements CommandExecutor {
                                                  }else{
                                                      player.sendMessage(ConfigVars.noMoney.replace("%money%",String.valueOf(money)));
                                                  }
+                                             }else{
+                                                 player.sendMessage(ConfigVars.notexists);
                                              }
                                          }
                              }
