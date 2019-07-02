@@ -39,9 +39,7 @@ public class SignChangeListener extends BaseListener {
                                     player.sendMessage(ConfigVars.noMoney.replace("%money%",String.valueOf(money)));
                                     return;
                                 }
-                                if (player.isOp() || player.hasPermission("restpsign.admin")){
-                                    player.sendMessage(ConfigVars.createDone);
-                                }else{
+                                if (!(player.isOp() || player.hasPermission("restpsign.admin"))){
                                     RestpSign.getInstance().getEconomy().withdrawPlayer(player,money);
                                     player.sendMessage(ConfigVars.withdrawmoney.replace("%money%",String.valueOf(money)));
                                 }
@@ -49,6 +47,7 @@ public class SignChangeListener extends BaseListener {
                             event.setLine(0,ConfigVars.line_1);
                             Tpsign tpSign = new Tpsign(event.getBlock().getLocation(),text, (int) (System.currentTimeMillis()/1000));
                             RestpSign.getInstance().getConfigManger().getDataConfig().addSign(tpSign);
+                            player.sendMessage(ConfigVars.createDone);
                             return;
                         }
                     }else{

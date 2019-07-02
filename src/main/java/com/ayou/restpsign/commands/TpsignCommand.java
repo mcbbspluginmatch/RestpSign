@@ -65,8 +65,6 @@ public class TpsignCommand implements CommandExecutor {
                                                      if (!(player.isOp()) || player.hasPermission("restpsign.admin")){
                                                          RestpSign.getInstance().getEconomy().withdrawPlayer(player, money);
                                                          player.sendMessage(ConfigVars.withdrawmoney.replace("%money%", String.valueOf(money)));
-                                                     }else{
-                                                         player.sendMessage(ConfigVars.editDone);
                                                      }
                                                  }
                                                  sign.setLine(0,ConfigVars.line_1);
@@ -75,6 +73,7 @@ public class TpsignCommand implements CommandExecutor {
                                                  Tpsign tpsign = ConfigVars.tpSigns.get(block);
                                                  tpsign.setResidence(args[1]);
                                                  RestpSign.getInstance().getConfigManger().getDataConfig().save();
+                                                 player.sendMessage(ConfigVars.editDone);
                                              }else{
                                                  player.sendMessage(ConfigVars.notexists);
                                              }
