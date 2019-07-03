@@ -36,7 +36,7 @@ public class RestpSignConfig {
             configuration = YamlConfiguration.loadConfiguration(file);
             int save = 0;
 
-            save += ConfigUtil.setDefaultIfNotSet(configuration,"version","0.0.1");
+            save += ConfigUtil.setDefaultIfNotSet(configuration,"version","0.1.0");
             save += ConfigUtil.setDefaultIfNotSet(configuration,"hookVault",true);
             save += ConfigUtil.setDefaultIfNotSet(configuration,"enable",true);
 

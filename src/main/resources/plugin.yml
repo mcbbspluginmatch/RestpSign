@@ -1,6 +1,6 @@
 name: RestpSign
 main: com.ayou.restpsign.RestpSign
-version: 0.0.1
+version: 0.1.0
 author: Ayou
 depend: [Residence]
 softdepend: [Vault]
