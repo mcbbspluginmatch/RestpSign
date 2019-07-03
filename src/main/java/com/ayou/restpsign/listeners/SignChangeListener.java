@@ -22,12 +22,22 @@ public class SignChangeListener extends BaseListener {
         if (lines.length >=2){
             String text = lines[0];
             if (text.startsWith("[") && text.contains("restp") & text.endsWith("]")){
+                if (!ConfigVars.enable){
+                    event.getPlayer().sendMessage(ConfigVars.notexists);
+                    event.setCancelled(true);
+                    return;
+                }
                 text = lines[1];
                 if (text != null){
                     Player player = event.getPlayer();
                     ResidenceInterface residenceManager = ResidenceApi.getResidenceManager();
                     ClaimedResidence residence = residenceManager.getByName(text);
                     if (residence != null){
+                        if (!player.hasPermission("restpsign.create")){
+                            player.sendMessage(ConfigVars.noPerm);
+                            event.setCancelled(true);
+                            return;
+                        }
                         if (!ConfigVars.tpSigns.containsKey(event.getBlock())){
                             if (ConfigVars.hookVault){
                                 double money = ConfigVars.default_money * ConfigVars.default_discount;
@@ -35,11 +45,11 @@ public class SignChangeListener extends BaseListener {
                                 if (tpsignVault != null){
                                     money = tpsignVault.getMoney() * tpsignVault.getDiscount();
                                 }
-                                if (!RestpSign.getInstance().getEconomy().has(player,money)){
-                                    player.sendMessage(ConfigVars.noMoney.replace("%money%",String.valueOf(money)));
-                                    return;
-                                }
-                                if (!(player.isOp() || player.hasPermission("restpsign.admin"))){
+                                if (!(player.isOp() || player.hasPermission("restpsign.admin") || player.hasPermission("restpsign.bypassmoney"))){
+                                    if (!RestpSign.getInstance().getEconomy().has(player,money)){
+                                        player.sendMessage(ConfigVars.noMoney.replace("%money%",String.valueOf(money)));
+                                        return;
+                                    }
                                     RestpSign.getInstance().getEconomy().withdrawPlayer(player,money);
                                     player.sendMessage(ConfigVars.withdrawmoney.replace("%money%",String.valueOf(money)));
                                 }

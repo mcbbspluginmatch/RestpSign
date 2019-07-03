@@ -1,6 +1,7 @@
 package com.ayou.restpsign;
 
-import com.ayou.restpsign.commands.TpsignCommand;
+import com.ayou.restpsign.commands.RestpSignCmdExecutor;
+import com.ayou.restpsign.commands.RestpSignCmdManager;
 import com.ayou.restpsign.config.ConfigManger;
 import com.ayou.restpsign.listeners.BlockBreakListener;
 import com.ayou.restpsign.listeners.PlayerInteractListener;
@@ -24,8 +25,9 @@ public class RestpSign extends JavaPlugin {
             this.getLogger().info("Hooked Vault!");
         }
         instance = this;
-        this.getCommand("restp").setExecutor(new TpsignCommand());
         this.configManger = new ConfigManger();
+//        this.getCommand("restp").setExecutor(new TpsignCommand());
+        this.registerCommands();
         this.registerListeners();
     }
 
@@ -52,6 +54,12 @@ public class RestpSign extends JavaPlugin {
         this.economy = rsp.getProvider();
         return this.economy != null;
     }
+
+    private void registerCommands(){
+        new RestpSignCmdManager();
+        this.getCommand("restp").setExecutor(new RestpSignCmdExecutor());
+    }
+
 
     private void registerListeners(){
         new PlayerInteractListener();

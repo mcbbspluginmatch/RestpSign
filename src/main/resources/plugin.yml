@@ -12,6 +12,24 @@ permissions:
   restpsign.admin:
     description: Admin permission
     default: op
+  restpsign.reload:
+    description: reloadcmd permission
+    default: op
   restpsign.create:
     description: Create sign permission
     default: true
+  restpsign.help:
+    description: helpcmd permission
+    default: true
+  restpsign.edit:
+    description: editcmd sign permission
+    default: true
+  restpsign.subzones:
+    description: subzonescmd permission
+    default: true
+  restpsign.bypasscooldown:
+    description: bypasscooldown permission
+    default: op
+  restpsign.bypassmoney:
+    description: bypassmoney permission
+    default: op

@@ -24,6 +24,11 @@ public class PlayerInteractListener extends BaseListener {
             if (event.getClickedBlock() != null && (event.getClickedBlock().getType() == Material.WALL_SIGN || event.getClickedBlock().getType() == Material.SIGN_POST)) {
                 Player player = event.getPlayer();
                 if (ConfigVars.tpSigns.containsKey(event.getClickedBlock())){
+                    if (!ConfigVars.enable){
+                        event.getPlayer().sendMessage(ConfigVars.notexists);
+                        event.setCancelled(true);
+                        return;
+                    }
                     if (cooldown.containsKey(player.getUniqueId())){
                         long time = ((cooldown.get(player.getUniqueId()) /1000 )+ ConfigVars.cooldown) - (System.currentTimeMillis() / 1000);
                         if (time <= 0){
@@ -36,7 +41,7 @@ public class PlayerInteractListener extends BaseListener {
                     }
                     Tpsign tpSign = ConfigVars.tpSigns.get(event.getClickedBlock());
                     tpSign.getRes().tpToResidence(player,player,Residence.getInstance().isResAdminOn(player));
-                    if (!(player.isOp() || player.hasPermission("restpsign.admin"))){
+                    if (!(player.isOp() || player.hasPermission("restpsign.admin") || player.hasPermission("restpsign.bypasscooldown"))){
                         if (!cooldown.containsKey(player.getUniqueId())){
                             cooldown.put(player.getUniqueId(),System.currentTimeMillis());
                         }

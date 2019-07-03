@@ -18,6 +18,11 @@ public class BlockBreakListener extends BaseListener {
         Block block = event.getBlock();
         if (block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST){
             if (ConfigVars.tpSigns.containsKey(block)){
+                if (!ConfigVars.enable){
+                    event.getPlayer().sendMessage(ConfigVars.notexists);
+                    event.setCancelled(true);
+                    return;
+                }
                 Tpsign tpSign = ConfigVars.tpSigns.get(block);
                 RestpSign.getInstance().getConfigManger().getDataConfig().remvoeSign(tpSign);
             }

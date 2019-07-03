@@ -34,8 +34,11 @@ public class ConfigVars {
     public static String editDone;
     public static String createDone;
     public static String notexists;
+    public static String error;
+    public static String notenable;
 
     public static boolean hookVault;
+    public static boolean enable;
 
     public static String line_1;
 
@@ -51,6 +54,7 @@ public class ConfigVars {
             if (config != null){
                 version = config.getInt("version");
                 hookVault = config.getBoolean("hookVault");
+                enable = config.getBoolean("enable");
 
                 ConfigurationSection lang = config.getConfigurationSection("Lang");
                 if (lang != null){
@@ -64,6 +68,8 @@ public class ConfigVars {
                     editDone = replaceChatColor(lang.getString("editDone"));
                     createDone = replaceChatColor(lang.getString("createDone"));
                     notexists = replaceChatColor(lang.getString("notexists"));
+                    error = replaceChatColor(lang.getString("error"));
+                    notenable = replaceChatColor(lang.getString("notenable"));
                 }
 
                 ConfigurationSection settings = config.getConfigurationSection("Settings");
