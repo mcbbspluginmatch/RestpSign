@@ -1,7 +1,9 @@
 package com.ayou.restpsign.listeners;
 
 import com.ayou.restpsign.RestpSign;
+import com.ayou.restpsign.config.ConfigUtil;
 import com.ayou.restpsign.config.ConfigVars;
+import com.ayou.restpsign.config.RestpSignPerms;
 import com.ayou.restpsign.signs.Tpsign;
 import com.ayou.restpsign.signs.TpsignVault;
 import com.bekvon.bukkit.residence.api.ResidenceApi;
@@ -18,6 +20,9 @@ import org.bukkit.event.block.SignChangeEvent;
 public class SignChangeListener extends BaseListener {
     @EventHandler
     public void onSignChange(SignChangeEvent event){
+        if (event.isCancelled()){
+            return;
+        }
         String[] lines = event.getLines();
         if (lines.length >=2){
             String text = lines[0];
@@ -33,11 +38,6 @@ public class SignChangeListener extends BaseListener {
                     ResidenceInterface residenceManager = ResidenceApi.getResidenceManager();
                     ClaimedResidence residence = residenceManager.getByName(text);
                     if (residence != null){
-                        if (!player.hasPermission("restpsign.create")){
-                            player.sendMessage(ConfigVars.noPerm);
-                            event.setCancelled(true);
-                            return;
-                        }
                         if (!ConfigVars.tpSigns.containsKey(event.getBlock())){
                             if (ConfigVars.hookVault){
                                 double money = ConfigVars.default_money * ConfigVars.default_discount;
@@ -45,17 +45,22 @@ public class SignChangeListener extends BaseListener {
                                 if (tpsignVault != null){
                                     money = tpsignVault.getMoney() * tpsignVault.getDiscount();
                                 }
-                                if (!(player.isOp() || player.hasPermission("restpsign.admin") || player.hasPermission("restpsign.bypassmoney"))){
+                                if (!(player.isOp() || ConfigUtil.hasPerm(player,RestpSignPerms.ADMIN) || ConfigUtil.hasPerm(player,RestpSignPerms.BYPASS_MONEY))){
                                     if (!RestpSign.getInstance().getEconomy().has(player,money)){
                                         player.sendMessage(ConfigVars.noMoney.replace("%money%",String.valueOf(money)));
                                         return;
                                     }
+									if (!ConfigUtil.hasPerm(player,RestpSignPerms.CREATE)){
+										player.sendMessage(ConfigVars.noPerm);
+										event.setCancelled(true);
+										return;
+									}
                                     RestpSign.getInstance().getEconomy().withdrawPlayer(player,money);
                                     player.sendMessage(ConfigVars.withdrawmoney.replace("%money%",String.valueOf(money)));
                                 }
                             }
                             event.setLine(0,ConfigVars.line_1);
-                            Tpsign tpSign = new Tpsign(event.getBlock().getLocation(),text, (int) (System.currentTimeMillis()/1000));
+                            Tpsign tpSign = new Tpsign(event.getBlock().getLocation(),text, player.getName(),(int) (System.currentTimeMillis()/1000));
                             RestpSign.getInstance().getConfigManger().getDataConfig().addSign(tpSign);
                             player.sendMessage(ConfigVars.createDone);
                             return;

@@ -60,6 +60,7 @@ public class RestpSignConfig {
                 save += ConfigUtil.setDefaultIfNotSet(lang,"notexists","&c该领地不存在!");
                 save += ConfigUtil.setDefaultIfNotSet(lang,"error","&c错误的参数!");
                 save += ConfigUtil.setDefaultIfNotSet(lang,"notenable","&c插件功能未被启用,请联系服主咨询!");
+                save += ConfigUtil.setDefaultIfNotSet(lang,"notowner","&c你不是该牌子的主人,请联系%owner%!");
             }
 
             ConfigurationSection settings;

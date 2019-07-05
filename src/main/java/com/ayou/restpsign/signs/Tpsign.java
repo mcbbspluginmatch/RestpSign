@@ -17,11 +17,13 @@ import java.util.Map;
 public class Tpsign implements ConfigurationSerializable {
     private Location location;
     private String residence;
+    private String owner;
     private int id;
 
-    public Tpsign(Location location, String residence, int id) {
+    public Tpsign(Location location, String residence,String owner, int id) {
         this.location = location;
         this.residence = residence;
+        this.owner = owner;
         this.id = id;
     }
 //    public TpSign(String world, int x,int y,int z,String residence) {
@@ -36,6 +38,7 @@ public class Tpsign implements ConfigurationSerializable {
         double z = (Double) map.get("z");
         this.location = new Location(Bukkit.getWorld(name),x,y,z);
         this.residence = (String) map.get("residence");
+        this.owner = (String) map.get("owner");
         this.id = (Integer)map.get("id");
     }
 
@@ -63,11 +66,16 @@ public class Tpsign implements ConfigurationSerializable {
         return id;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
     @Override
     public String toString() {
-        return "TpSign{" +
+        return "Tpsign{" +
                 "location=" + location +
                 ", residence='" + residence + '\'' +
+                ", owner='" + owner + '\'' +
                 ", id=" + id +
                 '}';
     }
@@ -79,6 +87,7 @@ public class Tpsign implements ConfigurationSerializable {
         map.put("y",location.getY());
         map.put("z",location.getZ());
         map.put("residence",residence);
+        map.put("owner",owner);
         map.put("id",id);
         return map;
     }

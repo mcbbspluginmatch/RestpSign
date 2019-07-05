@@ -47,7 +47,8 @@ public class RestpSignData {
                 save();
             }
         }catch (Exception e){
-            e.printStackTrace();
+            RestpSign.getInstance().getServer().getConsoleSender().sendMessage("§c加载data.yml错误,请尝试删除该文件!");
+//            e.printStackTrace();
         }
     }
 

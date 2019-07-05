@@ -2,7 +2,9 @@ package com.ayou.restpsign.commands.playercommands;
 
 import com.ayou.restpsign.RestpSign;
 import com.ayou.restpsign.commands.SubCommand;
+import com.ayou.restpsign.config.ConfigUtil;
 import com.ayou.restpsign.config.ConfigVars;
+import com.ayou.restpsign.config.RestpSignPerms;
 import com.ayou.restpsign.signs.Tpsign;
 import com.ayou.restpsign.signs.TpsignVault;
 import com.bekvon.bukkit.residence.api.ResidenceApi;
@@ -61,16 +63,24 @@ public class EditCommand extends SubCommand {
             ClaimedResidence residence = ResidenceApi.getResidenceManager().getByName(resName);
             if (ConfigVars.tpSigns.containsKey(block)){
                 if (residence != null){
+                    Tpsign tpsign = ConfigVars.tpSigns.get(block);
+                    if (tpsign.getOwner() != null){
+                        if (! (tpsign.getOwner().equalsIgnoreCase(player.getName()) || ConfigUtil.hasPerm(player,RestpSignPerms.ADMIN) || player.isOp())){
+                            player.sendMessage(ConfigVars.notowner.replace("%owner%",tpsign.getOwner()));
+                            return true;
+                        }
+                    }
                     if (ConfigVars.hookVault){
                         double money = ConfigVars.default_editmoney * ConfigVars.default_discount;
                         TpsignVault tpsignVault = ConfigVars.checkVault(player);
                         if (tpsignVault != null){
                             money = tpsignVault.getEditmoney() * tpsignVault.getDiscount();
                         }
-                        if (!(player.isOp()) || player.hasPermission("restpsign.admin") || player.hasPermission("restpsign.bypassmoney")){                        if (!RestpSign.getInstance().getEconomy().has(player,money)){
+                        if (!(player.isOp()) || ConfigUtil.hasPerm(player,RestpSignPerms.ADMIN) || ConfigUtil.hasPerm(player,RestpSignPerms.BYPASS_MONEY)){
+                            if (!RestpSign.getInstance().getEconomy().has(player,money)){
                             player.sendMessage(ConfigVars.noMoney.replace("%money%",String.valueOf(money)));
                             return true;
-                        }
+                           }
                             RestpSign.getInstance().getEconomy().withdrawPlayer(player, money);
                             player.sendMessage(ConfigVars.withdrawmoney.replace("%money%", String.valueOf(money)));
                         }
@@ -78,7 +88,6 @@ public class EditCommand extends SubCommand {
                     sign.setLine(0,ConfigVars.line_1);
                     sign.setLine(1,resName.length()>=12?resName.substring(0,12):resName);
                     sign.update();
-                    Tpsign tpsign = ConfigVars.tpSigns.get(block);
                     tpsign.setResidence(resName);
                     RestpSign.getInstance().getConfigManger().getDataConfig().save();
                     player.sendMessage(ConfigVars.editDone);

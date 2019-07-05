@@ -36,6 +36,7 @@ public class ConfigVars {
     public static String notexists;
     public static String error;
     public static String notenable;
+    public static String notowner;
 
     public static boolean hookVault;
     public static boolean enable;
@@ -70,6 +71,7 @@ public class ConfigVars {
                     notexists = replaceChatColor(lang.getString("notexists"));
                     error = replaceChatColor(lang.getString("error"));
                     notenable = replaceChatColor(lang.getString("notenable"));
+                    notowner = replaceChatColor(lang.getString("notowner"));
                 }
 
                 ConfigurationSection settings = config.getConfigurationSection("Settings");

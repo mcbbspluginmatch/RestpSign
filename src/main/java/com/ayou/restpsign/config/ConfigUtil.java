@@ -2,6 +2,7 @@ package com.ayou.restpsign.config;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,5 +29,12 @@ public class ConfigUtil {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static boolean hasPerm(Player player,RestpSignPerms perms){
+        if (player.hasPermission(perms.getPerm())){
+            return true;
+        }
+        return false;
     }
 }
