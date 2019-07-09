@@ -3,6 +3,7 @@ package com.ayou.restpsign;
 import com.ayou.restpsign.commands.RestpSignCmdExecutor;
 import com.ayou.restpsign.commands.RestpSignCmdManager;
 import com.ayou.restpsign.config.ConfigManger;
+import com.ayou.restpsign.config.ConfigVars;
 import com.ayou.restpsign.listeners.BlockBreakListener;
 import com.ayou.restpsign.listeners.PlayerInteractListener;
 import com.ayou.restpsign.listeners.SignChangeListener;
@@ -29,6 +30,18 @@ public class RestpSign extends JavaPlugin {
 //        this.getCommand("restp").setExecutor(new TpsignCommand());
         this.registerCommands();
         this.registerListeners();
+
+        try {
+            if (ConfigVars.stats){
+                String packageName = Bukkit.getServer().getClass().getPackage().getName();
+                String version = packageName.substring(packageName.lastIndexOf(".") + 1);
+                if (!version.contains("v1_7")){
+                    new MetricsLite(this);
+                }
+            }
+        }catch (Exception e){
+            getLogger().info("统计插件信息出错!");
+        }
     }
 
     public static RestpSign getInstance() {

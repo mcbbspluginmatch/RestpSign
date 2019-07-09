@@ -40,6 +40,7 @@ public class ConfigVars {
 
     public static boolean hookVault;
     public static boolean enable;
+    public static boolean stats;
 
     public static String line_1;
 
@@ -56,6 +57,7 @@ public class ConfigVars {
                 version = config.getInt("version");
                 hookVault = config.getBoolean("hookVault");
                 enable = config.getBoolean("enable");
+                stats = config.getBoolean("stats");
 
                 ConfigurationSection lang = config.getConfigurationSection("Lang");
                 if (lang != null){

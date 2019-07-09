@@ -16,6 +16,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author: Ayou
@@ -56,7 +58,7 @@ public class EditCommand extends SubCommand {
             return true;
         }
         Player player = (Player)sender;
-        Block block = player.getTargetBlock(null,8);
+        Block block = player.getTargetBlock((Set<Material>) null,8);
         if (block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST){
             Sign sign = (Sign)block.getState();
             String resName = args.get(0);
