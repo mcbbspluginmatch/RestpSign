@@ -97,6 +97,7 @@ public class RestpSignConfig {
                         TpsignVault vault = new TpsignVault(perm,money,editMoney,discount);
                         ConfigVars.tpsignVaults.add(vault);
                     }
+                    // Collections.reverse() —— 754503921
                     Collections.sort(ConfigVars.tpsignVaults, new Comparator<TpsignVault>() {
                         @Override
                         public int compare(TpsignVault o1, TpsignVault o2) {

@@ -16,12 +16,13 @@ import java.util.Map;
  * @Author: Ayou
  * @Date: 2019/7/2 12:10
  */
+// 规范命名 —— 754503921
 public class ConfigVars {
     static {
         tpSigns = new HashMap<Block, Tpsign>();
         tpsignVaults = new ArrayList<>();
     }
-    public static Map<Block,Tpsign> tpSigns;
+    public static Map<Block,Tpsign> tpSigns; // 保存服务器对象导致无法回收（同时保存了 Block 和 World） —— 754503921
 
     public static int version;
     public static String prefix;
